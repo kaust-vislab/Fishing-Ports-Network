@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html>
+
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 1000px;
+}																																												
+</style>
+
+<head>
+  <title>Fishing&Ports Network</title>
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://rawgit.com/exupero/saveSvgAsPng/gh-pages/saveSvgAsPng.js"></script>
+<script src="js/d3/d3.min.js"></script>
+<script src="js/vendor/jquery-1.11.2.min.js"></script>
+<script src="csv2json.js"></script>
+
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="amCharts &raquo; Feed" href="https://www.amcharts.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="amCharts &raquo; Comments Feed" href="https://www.amcharts.com/comments/feed/" />
+<link rel='stylesheet' id='-lib-3-plugins-export-export-css-css' href='https://www.amcharts.com/lib/3/plugins/export/export.css?ver=4.9.1' type='text/css' media='all' />
+<link rel='stylesheet' id='amcharts2-style-css' href='https://www.amcharts.com/wp-content/themes/amcharts2/css/main.css?ver=20171012-02' type='text/css' media='all' />
+<link rel='stylesheet' id='amcharts2-style-demo-css' href='https://www.amcharts.com/wp-content/themes/amcharts2/css/demo.css?ver=20171012-02' type='text/css' media='all' />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+    <link href="https://static.biblissima.fr/css/font-awesome.min.css" rel="stylesheet">
+
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/ammap.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/jquery.js'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/jquery.ui.touch-punch.min.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/wp-embed.min.js?ver=4.9.1'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/demo.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://downloads.mailchimp.com/js/signup-forms/popup/embed.js'></script>
+
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/slider.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/maps/js/worldLow.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/patterns.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/plugins/export/export.min.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/none.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/light.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/dark.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/black.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/chalk.js?ver=20171012-02'></script>
+<link rel='https://api.w.org/' href='https://www.amcharts.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.amcharts.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.amcharts.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 4.9.1" />
+<link rel='shortlink' href='https://www.amcharts.com/?p=5711' />
+<link rel="alternate" type="application/json+oembed" href="https://www.amcharts.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.amcharts.com%2Fdemos%2Fmap-with-curved-lines%2F%3Ftheme%3Dnone" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.amcharts.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.amcharts.com%2Fdemos%2Fmap-with-curved-lines%2F%3Ftheme%3Dnone&#038;format=xml" />
+<meta property="og:image" content="https://www.amcharts.com/wp-content/uploads/2015/06/demo_5711_none.jpg" > -->
+<!--  [if lt IE 9]> -->
+  <!-- <script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/html5shiv.min.js?ver=20171012-02'></script>
+  <script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/respond.min.js?ver=20171012-02'></script> -->
+ <!--  <![endif] -->
+</head>
+
+<body>
+
+  <!-- HTML -->
+<div class="controls" style=" text-align: center; ">
+    <h1 style ="margin-top: 0px; color: #3F51B5;font-size: 32px;">
+            <a> Fishing and Ports Network</a>
+ </div>
+<div class="controls" style="height:35px; text-align: center; ">            
+<!--   <select id="fulloptions_select" onchange="OptionChange(this)" style ="margin-top: 1px;background: rgb(90, 184, 92); color: #ffffff; border-width: thick; 
+                                       font-size: 10px;height: 30px; border: 1px solid; border-color: rgb(90, 184, 92);border-radius: 4px;">
+                                       <option value="1">OnlyA</option>
+                                       <option value="2">OnlyT</option>
+                                       <option value="3">OnlyC</option>
+                                       <option value="4">OnlyG</option>
+                                   
+           </select> -->
+           <button id="toggle-clusters" type="button" class="btn btn-success btn-sm">Toggle Cluster Colors</button>
+           <button id="toggle-pic" type="button" class="btn btn-success btn-sm">Save As png</button>
+
+  </div>
+  <hr style ="margin-top: 1px;margin-bottom: 1px;border: 0;border-top: 1px solid #3174ae;">
+<div id="chartdiv" style ="  background: white;">  
+</div>
+<div id="foot2" <ul class="footer2" style = "margin: 0px 10px 0 0;border-top: 0px dotted #aaa; padding: 0.5px 0 0 0;  text-align: right;  clear: both;">
+        <li style="display: inline-block; font-size: small;"><a href='https://kvl.kaust.edu.sa/Pages/Home.aspx'>Created By KAUST Visualization Core Lab, December 2017</a></li>
+        <!-- <li style="display: inline-block;"><aside style ="margin-top: -15px;"> June, 2017.
+        <a href="#" rel="author">Sohaib Ghani</a> </aside></li> -->
+        </ul>             
+</div>
+<!-- <div class="demo-controls">
+<div class="content-col">
+<div class="row" id="demo-control-holder">
+<div class="demo-control col-md-4"><div class="demo-control-category">Lines</div><div class="demo-control-value">-0.7</div><div class="demo-control-title">Arc</div><div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 11.1111%;"></span></div></div>
+<div class="demo-control col-md-4"><div class="demo-control-category">Lines</div><div class="demo-control-title">Arrow position</div><div class="select"><select><option value="start">start</option><option value="middle" selected="selected">middle</option><option value="end">end</option></select></div></div>
+<div class="demo-control col-md-4"><div class="demo-control-category">Lines</div><div class="demo-control-value">1</div><div class="demo-control-title">Thickness</div><div class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%;"></span></div></div></div>
+</div>
+</div> -->
+
+<!-- Chart code -->
+<script>
+  var jsonnodes; var jsonedges;var jsonnodes_clus; var jsonedges_clus;
+  var map;
+  var clusters =false;
+  var colorar = [ '#F4A460','#1e90ff','#00ced1',' #00FFFF','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#DAA520','#FF0000','#D2691E','#000000','#8A2BE2'];
+    // svg path for target icon
+var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+// svg path for plane icon
+var planeSVG = "M19.671,8.11l-2.777,2.777l-3.837-0.861c0.362-0.505,0.916-1.683,0.464-2.135c-0.518-0.517-1.979,0.278-2.305,0.604l-0.913,0.913L7.614,8.804l-2.021,2.021l2.232,1.061l-0.082,0.082l1.701,1.701l0.688-0.687l3.164,1.504L9.571,18.21H6.413l-1.137,1.138l3.6,0.948l1.83,1.83l0.947,3.598l1.137-1.137V21.43l3.725-3.725l1.504,3.164l-0.687,0.687l1.702,1.701l0.081-0.081l1.062,2.231l2.02-2.02l-0.604-2.689l0.912-0.912c0.326-0.326,1.121-1.789,0.604-2.306c-0.452-0.452-1.63,0.101-2.135,0.464l-0.861-3.838l2.777-2.777c0.947-0.947,3.599-4.862,2.62-5.839C24.533,4.512,20.618,7.163,19.671,8.11z";
+
+  var height = $(window).height()-110;
+  document.getElementById("chartdiv").style.height = height + "px";
+$("#toggle-clusters").click(function() {
+  clusters =!clusters;
+  //map.clear(); 
+ // map=null;
+//   var myNode = document.getElementById("chartdiv");
+//   myNode.innerHTML = '';
+//   while (myNode.firstChild) {
+//     myNode.removeChild(myNode.firstChild);
+// }
+console.log(map);
+
+// $.when(drawdata()).then(drawmap());
+   //drawdata();
+   if(clusters)
+    drawmap(jsonnodes_clus,jsonedges_clus);
+  else  drawmap(jsonnodes,jsonedges);
+   
+   map.linesSettings.arc=0;
+  });
+
+$("#toggle-pic").click(function() {
+     saveSvgAsPng(d3.select('svg').node(), 'vis.png', {scale:2.0});
+});
+
+   drawdata();drawdata_cluster();
+   drawmap(jsonnodes,jsonedges);
+
+
+function drawdata(){
+// var str= "Id,UserName \n 1,Sam Smith \n  2,Fred Frankly \n 1,Zachary Zupers"
+// console.log(CSV2JSON(str));
+// console.log("in draw data ");
+jsonnodes=[]; jsonedges=[];
+var fishmap=[];
+var portsmap=[];
+
+d3.text("ports.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    //console.log(row[2]); 
+    var tmp ={"id": row[0],"svgPath": targetSVG,"title": "Ports","latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
+    jsonnodes.push(tmp);
+    portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
+    return row.map(function(value) {
+      return +value;
+    });
+  });
+});
+d3.text("fishing_hotspots.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    //console.log(row[2]); 
+    var tmp;
+    if(!false) {  tmp ={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": "#FF0000","scale": 2};} // !clusters
+    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
+    jsonnodes.push(tmp);
+    fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
+    return row.map(function(value) {
+      return +value;
+    });
+  });
+  // console.log(fishmap);
+  // console.log(portsmap);
+  // console.log("fidshing "+jsonnodes);
+});
+
+d3.text("edges.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+  var fishlat= fishmap[row[0]+'s'].latitude;
+  var fishlng= fishmap[row[0]+'s'].longitude;
+  if(portsmap[row[1]+'s']){
+   var portlat= portsmap[row[1]+'s'].latitude;
+   var portlng= portsmap[row[1]+'s'].longitude;
+  }
+  var latarray = [portlat, fishlat];
+  var lngarray = [portlng, fishlng];
+  if(!false) {jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
+  else  { jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
+  });
+   // console.log("fedges "+jsonedges);
+});
+}
+
+
+function drawdata_cluster(){
+// var str= "Id,UserName \n 1,Sam Smith \n  2,Fred Frankly \n 1,Zachary Zupers"
+// console.log(CSV2JSON(str));
+// console.log("in draw data ");
+jsonnodes_clus=[]; jsonedges_clus=[];
+var fishmap=[];
+var portsmap=[];
+
+d3.text("ports.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    //console.log(row[2]); 
+    var tmp ={"id": row[0],"svgPath": targetSVG,"title": "Ports","latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
+    jsonnodes_clus.push(tmp);
+    portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
+    return row.map(function(value) {
+      return +value;
+    });
+  });
+});
+d3.text("fishing_hotspots.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    //console.log(row[2]); 
+    var tmp;
+    if(false) {  tmp ={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": "#FF0000","scale": 2};} // !clusters
+    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
+    jsonnodes_clus.push(tmp);
+    fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
+    return row.map(function(value) {
+      return +value;
+    });
+  });
+  // console.log(fishmap);
+  // console.log(portsmap);
+  // console.log("fidshing "+jsonnodes);
+});
+
+d3.text("edges.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+  var fishlat= fishmap[row[0]+'s'].latitude;
+  var fishlng= fishmap[row[0]+'s'].longitude;
+  if(portsmap[row[1]+'s']){
+   var portlat= portsmap[row[1]+'s'].latitude;
+   var portlng= portsmap[row[1]+'s'].longitude;
+  }
+  var latarray = [portlat, fishlat];
+  var lngarray = [portlng, fishlng];
+  if(false) {jsonedges_clus.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
+  else  { jsonedges_clus.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
+  });
+   // console.log("fedges "+jsonedges);
+});
+}
+
+function drawmap(n,e){
+
+ // console.log("in draw map ");
+ //  console.log(jsonnodes);
+ //map.clear();
+ //map=null;
+ map = new AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "theme": "none",
+  "dataProvider": {
+    "map": "worldLow",
+    "zoomLevel": 1,
+    // "zoomLongitude": -20.1341,
+    // "zoomLatitude": 49.1712,
+    "lines": e,
+    "images": n
+  },
+
+  "areasSettings": {
+    "unlistedAreasColor": "#FFCC00",
+    "unlistedAreasAlpha": 0.5
+  },
+
+  "imagesSettings": {
+    //"color": "#CC0000",
+    "rollOverColor": "#FFFFFF",
+    "rollOverColor": "#CC0000",
+    "selectedColor": "#000000"
+  },
+
+  "linesSettings": {
+    "arc": -0.85, // this makes lines curved. Use value from -1 to 1
+    "thickness": 0.55,
+    "arrow": "middle",
+   // "color":  "#4169E1",//"#00CED1",//"#CC0000",
+    "alpha": 0.7,
+    "arrowAlpha": 0.5,
+    "arrowSize": 3
+  },
+  "zoomControl": {
+    "gridHeight": 50,
+    "draggerAlpha": 1,
+    "gridAlpha": 0.2,
+    "homeButtonEnabled":true,
+    "zoomFactor":2
+  },
+
+  "balloon": {
+    "drop": true
+  },
+
+  "backgroundZoomsToTop": true,
+  "linesAboveImages": false,
+  
+  "export": {
+    "enabled": false
+  }
+} );
+}
+</script>
+
+</body>
+</html>
