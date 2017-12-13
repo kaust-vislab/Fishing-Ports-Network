@@ -12,9 +12,9 @@ d3.text("ports.csv", function(text) {
     var tmp ={"id": row[0],"svgPath": targetSVG,"title": "Ports","latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
     jsonnodes.push(tmp);
     portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
-    return row.map(function(value) {
-      return +value;
-    });
+    // return row.map(function(value) {
+    //   return +value;
+    // });
   });
 });
 d3.text("fishing_hotspots.csv", function(text) {
@@ -25,13 +25,14 @@ d3.text("fishing_hotspots.csv", function(text) {
     else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
     jsonnodes.push(tmp);
     fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
-    return row.map(function(value) {
-      return +value;
-    });
+    // return row.map(function(value) {
+    //   return +value;
+    // });
   });
   // console.log(fishmap);
   // console.log(portsmap);
-  // console.log("fidshing "+jsonnodes);
+  // console.log(jsonnodes);
+
 });
 
 d3.text("edges.csv", function(text) {
@@ -46,8 +47,10 @@ d3.text("edges.csv", function(text) {
   var lngarray = [portlng, fishlng];
   if(!false) {jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
   else  { jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
+
+         if(jsonedges.length ==1103){drawmap(jsonnodes,jsonedges);}
   });
-   // console.log("fedges "+jsonedges);
+    // console.log(jsonedges); 
 });
 }
 
@@ -66,9 +69,9 @@ d3.text("ports.csv", function(text) {
     var tmp ={"id": row[0],"svgPath": targetSVG,"title": "Ports","latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
     jsonnodes_clus.push(tmp);
     portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
-    return row.map(function(value) {
-      return +value;
-    });
+    // return row.map(function(value) {
+    //   return +value;
+    // });
   });
 });
 d3.text("fishing_hotspots.csv", function(text) {
@@ -79,9 +82,9 @@ d3.text("fishing_hotspots.csv", function(text) {
     else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
     jsonnodes_clus.push(tmp);
     fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
-    return row.map(function(value) {
-      return +value;
-    });
+    // return row.map(function(value) {
+    //   return +value;
+    // });
   });
   // console.log(fishmap);
   // console.log(portsmap);
