@@ -65,6 +65,11 @@
   width: 100%;
   height: 500px;
 }	
+
+.path{
+      fill: rgb(255, 204, 233);
+      fill-opacity: 0.3;
+}
 </style>
 </head>
 
@@ -122,7 +127,7 @@ $("#toggle-clusters").click(function() {
 // $.when(drawdata()).then(drawmap());
    //drawdata();
    map.clear();
-   //map=null;
+   map=null;
    if(clusters)drawmap(jsonnodes_clus,jsonedges_clus);
    else  drawmap(jsonnodes,jsonedges);
   });
@@ -141,17 +146,20 @@ map = AmCharts.makeChart( "chartdiv", {
   "theme":"light",
   "dataProvider": {
     "map": "worldLow",
+    "getAreasFromMap": true,     
     "zoomLevel": 1,
     "zoomLongitude": -20.1341,
     "zoomLatitude": 40.1712,
+
 
     "lines":e ,
     "images":n 
   },
 
   "areasSettings": {
-    "unlistedAreasColor": "#FFCC00",
-    "unlistedAreasAlpha": 0.5
+    "unlistedAreasColor": "#ff0000",
+    "unlistedAreasAlpha": 0.5,
+    "alpha": 0.5,
   },
 
   "imagesSettings": {
@@ -163,7 +171,7 @@ map = AmCharts.makeChart( "chartdiv", {
   "linesSettings": {
     "arc": 0.4, // this makes lines curved. Use value from -1 to 1
     "thickness": 0.46,
-    "arrow": "middle",
+    "arrow": "none",
     //"color": "#CC0000",
     "alpha": 0.7,
     "arrowAlpha": 0.5,
