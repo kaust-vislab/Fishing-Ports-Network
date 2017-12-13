@@ -21,8 +21,9 @@ d3.text("fishing_hotspots.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
     //console.log(row[2]); 
     var tmp;
-    if(!false) {  tmp ={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": "#FF0000","scale": 2};} // !clusters
-    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
+     // var sc= (fishnodes_size[row[2]-1]/239 <1) ?  1: fishnodes_size[row[2]-1]/239; console.log(sc); 
+    if(!false) {  tmp ={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": "#FF0000","scale": fishnodes_scale[row[2]-1]};} // !clusters   
+    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2 };}
     jsonnodes.push(tmp);
     fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
     // return row.map(function(value) {
@@ -50,7 +51,7 @@ d3.text("edges.csv", function(text) {
 
          if(jsonedges.length ==1103){drawmap(jsonnodes,jsonedges);}
   });
-    // console.log(jsonedges); 
+     //console.log(fishnodes_size); 
 });
 }
 
@@ -79,7 +80,7 @@ d3.text("fishing_hotspots.csv", function(text) {
     //console.log(row[2]); 
     var tmp;
     if(false) {  tmp ={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": "#FF0000","scale": 2};} // !clusters
-    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": 2};}
+    else {tmp={"id": row[2],"svgPath": targetSVG,"title": "Fishing Hotspot","latitude": row[1], "longitude": row[0],"color": colorar[row[2]-1],"scale": fishnodes_scale[row[2]-1]};}
     jsonnodes_clus.push(tmp);
     fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
     // return row.map(function(value) {
