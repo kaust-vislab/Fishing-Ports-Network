@@ -10,6 +10,7 @@ d3.text("ports.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
     //console.log(row[2]); 
     var tmp ={"id": row[0],"svgPath": targetSVG,"title": "Ports","latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
+    // var tmp ={"id": row[0],"svgPath": targetSVG,"title": row[2]+ ","+ row[1],"latitude": row[2], "longitude": row[1],"color": "#32CD32","scale": 0.6};
     jsonnodes.push(tmp);
     portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
     // return row.map(function(value) {
