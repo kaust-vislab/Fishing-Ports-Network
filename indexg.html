@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+<link rel="icon" type="image/x-icon" href="https://www.amcharts.com/favicon.ico" />
+<title>Fishing&Ports Network</title>
+
+
+
+<style>
+html, body, #map {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.stations, .stations svg {
+    position: absolute;
+}
+.stations svg {
+    width: 60px;
+    height: 20px;
+    padding-right: 100px;
+    font: 10px sans-serif;
+}
+.stations circle {
+    fill: brown;
+    stroke: black;
+    stroke-width: 1.5px;
+}
+
+</style>
+</head>
+
+<body >
+ <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+ <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>    
+ <div id="map"></div>
+
+<script>
+// Create the Google Map…
+var map = new google.maps.Map(d3.select("#map").node(), {
+    zoom: 2,
+    center: new google.maps.LatLng(37.76487, -122.41948),
+    mapTypeId: google.maps.MapTypeId.HTBRID
+});
+drawdata();
+
+var jsonnodes; var jsonedges;var jsonnodes_clus; var jsonedges_clus;
+var fishnodes_size=[72, 155, 7, 121, 46, 478, 16, 34, 98, 56, 2, 5, 6, 0, 7];
+var fishnodes_scale=[2.15, 2.32, 2.01, 2.25, 2.1, 4, 2.01, 2.1, 2.1, 2.2, 2, 2, 2, 1.5, 2];
+var map;
+var clusters =false;
+var colorar = [ '#F4A460','#1e90ff','#00ced1','#ff9800','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#DAA520','#FF0000','#D2691E','#000000','#8A2BE2'];
+
+function drawdata(){
+jsonnodes=[]; jsonedges=[];
+var fishmap=[];
+var portsmap=[];
+
+d3.text("ports.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+     var tmp =[row[2],row[1],"#32CD32",3];
+    jsonnodes.push(tmp);
+    portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
+  });
+});
+d3.text("fishing_hotspots.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_scale[row[2]-1]*14];
+
+    jsonnodes.push(tmp);
+    fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
+    if(jsonnodes.length ==782){
+
+      for (var i = 0; i < jsonnodes.length; i++) {             
+               var marker = new google.maps.Circle({
+                 center: {lat: +jsonnodes[i][0], lng: +jsonnodes[i][1]},
+                 map: map,
+                 radius:jsonnodes[i][3]*10000,
+                strokeColor: '#0000ff',
+                strokeOpacity: 0.2,
+                strokeWeight: 1,
+                fillColor: jsonnodes[i][2],
+                fillOpacity: 0.85,
+                title: 'Uluru (Ayers Rock)',
+                 zIndex: 1000
+               });
+             }
+    }
+  });
+});
+
+d3.text("edges.csv", function(text) {
+  var data = d3.csv.parseRows(text).map(function(row) {
+    var fishlat,fishlng,portlat,portlng;
+  if(fishmap[row[0]+'s']){  
+    fishlat= fishmap[row[0]+'s'].latitude;
+    fishlng= fishmap[row[0]+'s'].longitude;
+  }
+  if(portsmap[row[1]+'s']){
+   portlat= portsmap[row[1]+'s'].latitude;
+   portlng= portsmap[row[1]+'s'].longitude;
+  }
+  var latarray = [portlat, fishlat];
+  var lngarray = [portlng, fishlng];
+ if(portlat ) jsonedges.push([+portlat, +portlng, +fishlat, +fishlng,  colorar[row[0]-1]]);
+         if(jsonedges.length ==1098){
+            for(var i=0; i<jsonedges.length; i++){  //
+              // console.log(jsonedges[i][0]);
+               var flightPlanCoordinates2 =  [{lat: jsonedges[i][0], lng: jsonedges[i][1]},{lat: jsonedges[i][2], lng: jsonedges[i][3]}];
+
+              var flightPath = new google.maps.Polyline({
+              path: flightPlanCoordinates2,
+              geodesic: false,
+              strokeColor: jsonedges[i][4],
+              strokeOpacity: 0.4,
+              strokeWeight: 0.3
+            });
+            flightPath.setMap(map);
+            //drawCurve(new google.maps.LatLng(jsonedges[i][0], jsonedges[i][1]),new google.maps.LatLng(jsonedges[i][2], jsonedges[i][3]), map);
+          }
+         }
+  });
+});
+}
+
+
+
+// var overlay ;//= new google.maps.OverlayView();
+
+// // Add the container when the overlay is added to the map.
+// overlay.onAdd = function () {
+//     var layer = d3.select(this.getPanes().overlayLayer).append("div")
+//         .attr("class", "stations");
+
+//     // Draw each marker as a separate SVG element.
+//     // We could use a single SVG, but what size would it have?
+//     overlay.draw = function () {
+//         var projection = this.getProjection(),
+//             padding = 10;
+
+//         var marker = layer.selectAll("svg")
+//             .data(d3.entries(jsonnodes))
+//             .each(transform) // update existing markers
+//         .enter().append("svg:svg")
+//             .each(transform)
+//             .attr("class", "marker");
+
+//         // Add a circle.
+//         marker.append("svg:circle")
+//             .attr("r", function(d){
+//               return d.value[3];
+//             })
+//             .attr("cx", padding)
+//             .attr("cy", padding)
+//             .style("zIndex", 10000)
+//             .style("fill", function(d){
+//               // console.log(d);
+//               return d.value[2];
+//             });
+
+//         // Add a label.
+//         // marker.append("svg:text")
+//         //     .attr("x", padding + 7)
+//         //     .attr("y", padding)
+//         //     .attr("dy", ".31em")
+//         //     .text(function (d) {
+//         //     return d.key;
+//         // });
+
+//         function transform(d) {
+//           // console.log(d);
+//           // console.log(d.latitude);
+//             d = new google.maps.LatLng(d.value[0], d.value[1]);
+//             d = projection.fromLatLngToDivPixel(d);
+//             return d3.select(this)
+//                 .style("left", (d.x - padding) + "px")
+//                 .style("top", (d.y - padding) + "px");
+//         }
+//     };
+// };
+
+// Bind our overlay to the map…
+//overlay.setMap(map);
+
+
+</script>
+
+</body>
+</html>
