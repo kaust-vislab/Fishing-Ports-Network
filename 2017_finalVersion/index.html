@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: http://ogp.me/ns#">
+<head>
+<!-- <meta charset="UTF-8"> -->
+<!-- <script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script> -->
+<link rel="icon" type="image/x-icon" href="https://www.amcharts.com/favicon.ico" />
+<!-- <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"/>
+ -->
+<!-- <link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://www.amcharts.com/xmlrpc.php"> -->
+<title>Fishing&Ports Network</title>
+
+
+<!-- <link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="amCharts &raquo; Feed" href="https://www.amcharts.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="amCharts &raquo; Comments Feed" href="https://www.amcharts.com/comments/feed/" /> -->
+<!-- <link rel='stylesheet' id='-lib-3-plugins-export-export-css-css' href='https://www.amcharts.com/lib/3/plugins/export/export.css?ver=4.9.1' type='text/css' media='all' /> -->
+<link rel='stylesheet' id='amcharts2-style-css' href='https://www.amcharts.com/wp-content/themes/amcharts2/css/main.css?ver=20171012-02' type='text/css' media='all' />
+<!-- <link rel='stylesheet' id='amcharts2-style-demo-css' href='https://www.amcharts.com/wp-content/themes/amcharts2/css/demo.css?ver=20171012-02' type='text/css' media='all' /> -->
+<!-- <link rel="stylesheet" href="main.css"/> -->
+<link rel="stylesheet" href="demo.css"/>
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/ammap.js?ver=20171012-02'></script> -->
+<script src="js/ammap.js"></script>
+<script src="js/worldLow.js"></script>
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/maps/js/worldLow.js?ver=20171012-02'></script> -->
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/patterns.js?ver=20171012-02'></script> -->
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/plugins/export/export.min.js?ver=20171012-02'></script> -->
+<!-- <script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/none.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/light.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/dark.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/black.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/chalk.js?ver=20171012-02'></script> -->
+
+<script src="js/saveSvgAsPng.js"></script>
+<script src="js/d3/d3.min.js"></script>
+<script src="js/vendor/jquery-1.11.2.min.js"></script>
+<!-- <script src="js/FileSaver.min.js"></script> -->
+<script src="csv2json.js"></script>
+<script src="data.js"></script>
+
+<script src="main.js"></script>
+<script src="demo.js"></script>
+<!-- <script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/main.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/demo.js?ver=20171012-02'></script> -->
+<!-- <script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script> -->
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/ui/slider.min.js?ver=1.11.4'></script>
+<!-- <script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/jquery.ui.touch-punch.min.js?ver=20171012-02'></script>
+<script type='text/javascript' src='https://www.amcharts.com/wp-content/themes/amcharts2/js/jquery.kinetic.min.js?ver=20171012-02'></script> -->
+<!-- <script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/wp-embed.min.js?ver=4.9.1'></script> -->
+
+<link rel="stylesheet" href="js/bootstrap.min.css">  
+<!-- <link href="https://static.biblissima.fr/css/font-awesome.min.css" rel="stylesheet"> -->
+<!-- <link rel='https://api.w.org/' href='https://www.amcharts.com/wp-json/' /> -->
+<!-- <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.amcharts.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.amcharts.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 4.9.1" />
+<link rel='shortlink' href='https://www.amcharts.com/?p=5711' />
+<link rel="alternate" type="application/json+oembed" href="https://www.amcharts.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.amcharts.com%2Fdemos%2Fmap-with-curved-lines%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.amcharts.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.amcharts.com%2Fdemos%2Fmap-with-curved-lines%2F&#038;format=xml" />
+<meta property="og:image" content="https://www.amcharts.com/wp-content/uploads/2015/06/demo_5711_none.jpg" />  -->
+<style>
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}	
+
+.path{
+      fill: rgb(255, 204, 233);
+      fill-opacity: 0.3;
+}
+</style>
+</head>
+
+<body class="demo-template-default single single-demo postid-5711 no-logo alt-bg" style="    background: #ffffff;">
+
+<div class="controls" style=" text-align: center; ">
+    <h1 style ="margin-top: 1px; margin-bottom: 0px; color: #3F51B5;font-size: 32px;">
+            <a> Fishing and Ports Network</a>
+ </div>
+<hr style ="margin-top: 1px;margin-bottom: 5px;border: 0;border-top: 1px solid #3174ae;">
+
+  <div id="primary" class="content-area">
+          <div class="content-col" style = "background: #3479b7; text-align: center;     width: auto; ">
+                 
+              <div class="row" id="demo-control-holder" style ="    padding-left: 10%; padding-right: 22%;text-align: center;     width: 100%;" >    
+
+                  <div id="test" style="    position: absolute;   margin-left: 70%;     margin-top: 20px;" >
+                    <button id="toggle-clusters" type="button" class="btn btn-success btn-sm" style = "background: #ee8181;  border-color: antiquewhite; margin-top: 2px;">Toggle Cluster Colors</button>
+                    <button id="toggle-pic" type="button" class="btn btn-success btn-sm" style = "background: #ee8181; border-color: antiquewhite; margin-top: 2px;" >Save As png</button>
+                  </div>              
+              </div>
+
+          </div>
+      <div id="chartdiv"></div> 
+      <div id="foot2" <ul class="footer2" style = "margin: 0px 10px 0 0;border-top: 0px dotted #aaa; padding: 0.5px 0 0 0;  text-align: right;  clear: both;">
+              <li style="display: inline-block; font-size: small;"><a href='https://kvl.kaust.edu.sa/Pages/Home.aspx'>Created By KAUST Visualization Core Lab, December 2017</a></li>
+              </ul>             
+      </div>
+  </div>
+
+
+<script>
+// try {
+
+var jsonnodes; var jsonedges;var jsonnodes_clus; var jsonedges_clus;
+// var fishnodes_size=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var fishnodes_size=[72, 155, 7, 121, 46, 478, 16, 34, 98, 56, 2, 5, 6, 0, 7];
+var fishnodes_scale=[2.15, 2.32, 2.01, 2.25, 2.1, 4, 2.01, 2.1, 2.1, 2.2, 2, 2, 2, 1.5, 2];
+var map;
+var clusters =false;
+var colorar = [ '#F4A460','#1e90ff','#00ced1','#ff9800','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#DAA520','#FF0000','#D2691E','#000000','#8A2BE2'];
+            // svg path for target icon
+var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+// svg path for plane icon
+var planeSVG = "M19.671,8.11l-2.777,2.777l-3.837-0.861c0.362-0.505,0.916-1.683,0.464-2.135c-0.518-0.517-1.979,0.278-2.305,0.604l-0.913,0.913L7.614,8.804l-2.021,2.021l2.232,1.061l-0.082,0.082l1.701,1.701l0.688-0.687l3.164,1.504L9.571,18.21H6.413l-1.137,1.138l3.6,0.948l1.83,1.83l0.947,3.598l1.137-1.137V21.43l3.725-3.725l1.504,3.164l-0.687,0.687l1.702,1.701l0.081-0.081l1.062,2.231l2.02-2.02l-0.604-2.689l0.912-0.912c0.326-0.326,1.121-1.789,0.604-2.306c-0.452-0.452-1.63,0.101-2.135,0.464l-0.861-3.838l2.777-2.777c0.947-0.947,3.599-4.862,2.62-5.839C24.533,4.512,20.618,7.163,19.671,8.11z";
+
+var height = $(window).height()-145;
+//document.getElementById("chartdiv").style.width = $(window).width()-50 + "px";
+  document.getElementById("chartdiv").style.height = height + "px";
+
+drawdata();
+drawdata_cluster();
+
+
+$("#toggle-clusters").click(function() {
+  clusters =!clusters;
+//console.log(map);
+// $.when(drawdata()).then(drawmap());
+   //drawdata();
+   map.clear();
+   map=null;
+   if(clusters)drawmap(jsonnodes_clus,jsonedges_clus);
+   else  drawmap(jsonnodes,jsonedges);
+  });
+
+$("#toggle-pic").click(function() {
+     saveSvgAsPng(d3.select('svg').node(), 'vis.png', {scale:2.0});
+});
+
+
+
+function drawmap(n,e){
+  // console.log(n.length);
+
+map = AmCharts.makeChart( "chartdiv", {
+  "type": "map",
+  "theme":"light",
+  "dataProvider": {
+    "map": "worldLow",
+    "getAreasFromMap": true,     
+    "zoomLevel": 1,
+    "zoomLongitude": -20.1341,
+    "zoomLatitude": 40.1712,
+
+
+    "lines":e ,
+    "images":n 
+  },
+
+  "areasSettings": {
+    "unlistedAreasColor": "#ff0000",
+    "unlistedAreasAlpha": 0.5,
+    "alpha": 0.5,
+     "autoZoom": true
+
+  },
+
+  "imagesSettings": {
+    //"color": "#CC0000",
+    "rollOverColor": "#CC0000",
+    "selectedColor": "#000000"
+  },
+
+  "linesSettings": {
+    "arc": 0.4, // this makes lines curved. Use value from -1 to 1
+    "thickness": 0.46,
+    "arrow": "none",
+    //"color": "#CC0000",
+    "alpha": 0.7,
+    "arrowAlpha": 0.5,
+    "arrowSize": 3
+  },
+  "zoomControl": {
+    "zoomControlEnabled": true,
+    "gridHeight": 100,
+    "draggerAlpha": 1,
+    "gridAlpha": 0.4,
+    "homeButtonEnabled":true
+  },
+
+  "backgroundZoomsToTop": false,
+  "linesAboveImages": false,
+  "mouseWheelZoomEnabled":true,
+  "zoomDuration":0.2,
+
+  "export": {
+    "enabled": false
+  }
+});    //map      
+}
+ // catch( e ) {
+ //     console.log( e );
+ //          }
+// }
+</script>
+
+<script>
+try {
+      // Demo controls
+ var amchartsDemoControls = [ {
+  "category": "Lines",
+  "title": "Arc Curve",
+  "type": "slider",
+  "min": -0.9,
+  "max": 0.9,
+  "step":.1,
+  "property": "linesSettings.arc"
+}, {
+  "category": "Lines",
+  "title": "Edge Arrow Position",
+  "type": "select",
+  "options": [
+    "start",
+    "middle",
+    "end",
+    "none"
+  ],
+  "property": "linesSettings.arrow"
+}, {
+  "category": "Lines",
+  "title": "Edges Thickness",
+  "type": "slider",
+  "min": 0.2,
+  "max": 2,
+  "step":.4,
+  "property": "linesSettings.thickness"
+} ]          
+}
+ catch( e ) {
+    console.log( e );
+    }
+</script>
+
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+    // console.log('document ready');
+  });
+
+  $(window).load(function(){
+      // console.log('window ready');  
+
+  });
+  </script>
+
+</body>
+</html>

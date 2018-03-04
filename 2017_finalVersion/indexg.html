@@ -44,32 +44,18 @@ html, body, #map {
 <script>
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
-    zoom: 2.7,
-    center: new google.maps.LatLng(27.76487, 12.41948),
+    zoom: 2,
+    center: new google.maps.LatLng(37.76487, -122.41948),
     mapTypeId: google.maps.MapTypeId.HTBRID
 });
 drawdata();
 
-function getclustersize(inp){
-   if(inp >0 && inp <=100) return 25;
-   else if(inp >100 && inp <=200) return 28;
-   else if(inp >200 && inp <=300) return 30;
-   else if(inp >300 && inp <=400) return 32;
-   else if(inp >400 && inp <=500) return 34;
-   else if(inp >500 && inp <=600) return 36;
-   else if(inp >600 ) return 40;
-}
-
-
 var jsonnodes; var jsonedges;var jsonnodes_clus; var jsonedges_clus;
-//var fishnodes_size=[72, 155, 7, 121, 46, 478, 16, 34, 98, 56, 2, 5, 6, 1, 7,7];
-var fishnodes_size=[162, 437, 19, 317, 105, 256, 43, 141, 847, 316, 18, 6, 22, 28, 6, 34];
-var fishnodes_scale=[28, 34, 25, 32, 28, 30, 25, 28, 40, 32, 25, 25, 25, 25, 25,25];
-// var fishnodes_scale=[2.15, 2.32, 2.01, 2.25, 2.1, 4, 2.01, 2.1, 2.1, 2.2, 2, 2, 2, 1, 2,2];
+var fishnodes_size=[72, 155, 7, 121, 46, 478, 16, 34, 98, 56, 2, 5, 6, 0, 7];
+var fishnodes_scale=[2.15, 2.32, 2.01, 2.25, 2.1, 4, 2.01, 2.1, 2.1, 2.2, 2, 2, 2, 0, 2];
 var map;
 var clusters =false;
-var colorar = [ '#F4A460','#1e90ff','#00ced1','#DAA520','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#ff9800','#FF0000','#D2691E',' #DC143C','#8A2BE2','#5F9EA0'];
-//var colorar = [ 'white','white','white','white','white', 'white',' white', ' white','white','white','#DAA520','white','white','white','white','white'];
+var colorar = [ '#F4A460','#1e90ff','#00ced1','#ff9800','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#DAA520','#FF0000','#D2691E','#000000','#8A2BE2'];
 
 function drawdata(){
 jsonnodes=[]; jsonedges=[];
@@ -81,73 +67,65 @@ d3.text("ports.csv", function(text) {
      var tmp =[row[2],row[1],"#32CD32",3];
     jsonnodes.push(tmp);
     portsmap[row[0]+'s'] = {"latitude": row[2], "longitude": row[1]};
-  });  
+  });
 });
-
 d3.text("fishing_hotspots.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
-     var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_scale[row[2]-1]*1];
-    var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_size[row[2]-1]/10];
-   //console.log((row[2]) + ":"+ getclustersize(fishnodes_size[row[2]-1]));
+    var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_scale[row[2]-1]*14];
 
     jsonnodes.push(tmp);
     fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
-    if(jsonnodes.length ==1427){
-      for (var i = 0; i < jsonnodes.length; i++) {     
-               if(jsonnodes[i][3] !=3 && jsonnodes[i][3] <20)jsonnodes[i][3] =20;
+    if(jsonnodes.length ==782){
+
+      for (var i = 0; i < jsonnodes.length; i++) {             
                var marker = new google.maps.Circle({
                  center: {lat: +jsonnodes[i][0], lng: +jsonnodes[i][1]},
                  map: map,
                  radius:jsonnodes[i][3]*10000,
-                 strokeColor: '#0000ff',
-                 strokeOpacity: 0.2,
-                 strokeWeight: 1,
-                 fillColor: jsonnodes[i][2],
-                 fillOpacity: 0.85,
-                 title: 'Uluru (Ayers Rock)',
-                 zIndex: 10000
+                strokeColor: '#0000ff',
+                strokeOpacity: 0.2,
+                strokeWeight: 1,
+                fillColor: jsonnodes[i][2],
+                fillOpacity: 0.85,
+                title: 'Uluru (Ayers Rock)',
+                 zIndex: 1000
                });
              }
     }
   });
 });
-//console.log(jsonnodes);
-//console.log(portsmap);
-var count=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
 d3.text("edges.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
-      var fishlat,fishlng,portlat,portlng;
-      if(fishmap[row[0]+'s']){  
-        fishlat= fishmap[row[0]+'s'].latitude;
-        fishlng= fishmap[row[0]+'s'].longitude;
-        count[row[0]-1]++;
-      } else console.log(row[0]+'s' + " "+ fishmap[row[0]+'s']);
-      if(portsmap[row[1]+'s']){
-       portlat= portsmap[row[1]+'s'].latitude;
-       portlng= portsmap[row[1]+'s'].longitude;
-      }else console.log(row[1]+'s' + "    "+ portsmap[row[1]+'s']);
-      var latarray = [portlat, fishlat];
-      var lngarray = [portlng, fishlng];
-      if(portlat ) jsonedges.push([+portlat, +portlng, +fishlat, +fishlng,  colorar[row[0]-1]]);
+    var fishlat,fishlng,portlat,portlng;
+  if(fishmap[row[0]+'s']){  
+    fishlat= fishmap[row[0]+'s'].latitude;
+    fishlng= fishmap[row[0]+'s'].longitude;
+  } //else console.log(row[0]+'s' + " "+ fishmap[row[0]+'s']);
+  if(portsmap[row[1]+'s']){
+   portlat= portsmap[row[1]+'s'].latitude;
+   portlng= portsmap[row[1]+'s'].longitude;
+  }//else console.log(row[1]+'s' + "    "+ portsmap[row[1]+'s']);
+  var latarray = [portlat, fishlat];
+  var lngarray = [portlng, fishlng];
+ if(portlat ) jsonedges.push([+portlat, +portlng, +fishlat, +fishlng,  colorar[row[0]-1]]);
+         if(jsonedges.length ==1098){
+            for(var i=0; i<jsonedges.length; i++){  //
+              // console.log(jsonedges[i][0]);
+               var flightPlanCoordinates2 =  [{lat: jsonedges[i][0], lng: jsonedges[i][1]},{lat: jsonedges[i][2], lng: jsonedges[i][3]}];
 
-            if(jsonedges.length ==2757){
-                for(var i=0; i<jsonedges.length; i++){  //
-                  // console.log(jsonedges[i][0]);
-                   var flightPlanCoordinates2 =  [{lat: jsonedges[i][0], lng: jsonedges[i][1]},{lat: jsonedges[i][2], lng: jsonedges[i][3]}];
-
-                  var flightPath = new google.maps.Polyline({
-                  path: flightPlanCoordinates2,
-                  geodesic: false,
-                  strokeColor: jsonedges[i][4],
-                  strokeOpacity: 0.8,
-                  strokeWeight: 0.3
-                });
-                flightPath.setMap(map);
-                //drawCurve(new google.maps.LatLng(jsonedges[i][0], jsonedges[i][1]),new google.maps.LatLng(jsonedges[i][2], jsonedges[i][3]), map);
-              }
+              var flightPath = new google.maps.Polyline({
+              path: flightPlanCoordinates2,
+              geodesic: false,
+              strokeColor: jsonedges[i][4],
+              strokeOpacity: 0.4,
+              strokeWeight: 0.3
+            });
+            flightPath.setMap(map);
+            //drawCurve(new google.maps.LatLng(jsonedges[i][0], jsonedges[i][1]),new google.maps.LatLng(jsonedges[i][2], jsonedges[i][3]), map);
+          }
          }
   });
-   // console.log(count);
 });
 }
 
