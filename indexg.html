@@ -37,18 +37,29 @@ html, body, #map {
 
 
 
-
+ <script src=" https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>    
  <script src="js/d3/d3.min.js"></script>    
- <div id="map"></div>
+ <script src="canvas2image.min.js"></script>
+ <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+ <div id="map"></div>     
+<!-- <br/>
+<input type="button" id="btnSave" value="Save PNG"/>
+ <div id="div2"></div> -->
 
 <script>
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
-    zoom: 2.7,
+    zoom: 2.9,
     center: new google.maps.LatLng(27.76487, 12.41948),
-    mapTypeId: google.maps.MapTypeId.HTBRID
+    mapTypeId: google.maps.MapTypeId.terrain
 });
 drawdata();
+
+
 
 function getclustersize(inp){
    if(inp >0 && inp <=100) return 25;
@@ -103,7 +114,7 @@ d3.text("fishing_hotspots.csv", function(text) {
                  strokeOpacity: 0.2,
                  strokeWeight: 1,
                  fillColor: jsonnodes[i][2],
-                 fillOpacity: 0.85,
+                 fillOpacity: 0.999,
                  title: 'Uluru (Ayers Rock)',
                  zIndex: 10000
                });
@@ -139,18 +150,57 @@ d3.text("edges.csv", function(text) {
                   path: flightPlanCoordinates2,
                   geodesic: false,
                   strokeColor: jsonedges[i][4],
-                  strokeOpacity: 0.8,
-                  strokeWeight: 0.3
+                  strokeOpacity: 0.99,
+                  strokeWeight: 0.4
                 });
                 flightPath.setMap(map);
-                //drawCurve(new google.maps.LatLng(jsonedges[i][0], jsonedges[i][1]),new google.maps.LatLng(jsonedges[i][2], jsonedges[i][3]), map);
-              }
+                //drawCurve(new google.maps.LatLng(jsonedges[i][0], jsonedges[i][1]),new google.maps.LatLng(jsonedges[i][2], jsonedges[i][3]), map);           
+              }               
          }
   });
    // console.log(count);
 });
-}
 
+
+  // html2canvas($('#map'), {
+  //               useCORS: true,
+  //               onrendered: function(canvas) {
+  //                 var img = canvas.toDataURL();
+  //                 console.log(img);
+  //                 window.open(img);
+  //                // // document.write('<img src="' + img + '"/>');
+  //                //   var img = canvas.toDataURL("image/png");
+  //                //          img = img.replace('data:image/png;base64,', '');
+  //                //          var finalImageSrc = 'data:image/png;base64,' + img;
+  //                //          $('#div2').attr('src', finalImageSrc);
+  //                theCanvas = canvas;
+  //                document.body.appendChild(canvas);
+  //                // Convert and download as image 
+  //                Canvas2Image.saveAsPNG(canvas);                  
+  //                $("#div2").append(canvas);            
+
+  //               }
+  //             });
+
+
+}
+//     $("#btnSave").click(function() { 
+//         html2canvas($("#map"), {
+//             useCORS: true,
+// //                        allowTaint:true,
+//             onrendered: function(canvas) {
+//                 theCanvas = canvas;
+//                 document.body.appendChild(canvas);
+
+//                 // Convert and download as image 
+//                 Canvas2Image.saveAsPNG(canvas); 
+                
+//                 $("#div2").append(canvas);
+//                 // Clean up 
+//                 //document.body.removeChild(canvas);
+//             }
+//         });
+//     });
 
 
 // var overlay ;//= new google.maps.OverlayView();
