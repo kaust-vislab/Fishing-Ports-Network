@@ -39,18 +39,29 @@ d3.text("fishing_hotspots.csv", function(text) {
 
 d3.text("edges.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
-  var fishlat= fishmap[row[0]+'s'].latitude;
-  var fishlng= fishmap[row[0]+'s'].longitude;
-  if(portsmap[row[1]+'s']){
-   var portlat= portsmap[row[1]+'s'].latitude;
-   var portlng= portsmap[row[1]+'s'].longitude;
-  }
+  var fishlat,fishlng,portlat,portlng;
+  var fish_index, port_index;
+  if(row[0]<33) {fish_index=row[0]; port_index=row[1];}
+  else {fish_index=row[1]; port_index=row[0];}
+  if(fishmap[fish_index+'s']){  
+    fishlat= fishmap[fish_index+'s'].latitude;
+    fishlng= fishmap[fish_index+'s'].longitude;
+    count[fish_index-1]++;
+  } else console.log(fish_index+'s' + " "+ fishmap[fish_index+'s']);
+  if(portsmap[port_index+'s']){
+   portlat= portsmap[port_index+'s'].latitude;
+   portlng= portsmap[port_index+'s'].longitude;
+  }else console.log(port_index+'s' + "    "+ portsmap[port_index+'s']);
+
   var latarray = [portlat, fishlat];
   var lngarray = [portlng, fishlng];
-  if(!false) {jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
-  else  { jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
+  if(portlat ){ 
+      if(row[0]<33) {jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
+      else         { jsonedges.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
+  }
 
-         if(jsonedges.length ==1103){drawmap(jsonnodes,jsonedges);}
+  if(jsonedges.length ==1803){drawmap(jsonnodes,jsonedges);}
+
   });
      //console.log(fishnodes_size); 
 });
@@ -95,14 +106,23 @@ d3.text("fishing_hotspots.csv", function(text) {
 
 d3.text("edges.csv", function(text) {
   var data = d3.csv.parseRows(text).map(function(row) {
-  var fishlat= fishmap[row[0]+'s'].latitude;
-  var fishlng= fishmap[row[0]+'s'].longitude;
-  if(portsmap[row[1]+'s']){
-   var portlat= portsmap[row[1]+'s'].latitude;
-   var portlng= portsmap[row[1]+'s'].longitude;
-  }
+  var fishlat,fishlng,portlat,portlng;
+  var fish_index, port_index;
+  if(row[0]<33) {fish_index=row[0]; port_index=row[1];}
+  else {fish_index=row[1]; port_index=row[0];}
+  if(fishmap[fish_index+'s']){  
+    fishlat= fishmap[fish_index+'s'].latitude;
+    fishlng= fishmap[fish_index+'s'].longitude;
+    count[fish_index-1]++;
+  } else console.log(fish_index+'s' + " "+ fishmap[fish_index+'s']);
+  if(portsmap[port_index+'s']){
+   portlat= portsmap[port_index+'s'].latitude;
+   portlng= portsmap[port_index+'s'].longitude;
+  }else console.log(port_index+'s' + "    "+ portsmap[port_index+'s']);
+
   var latarray = [portlat, fishlat];
   var lngarray = [portlng, fishlng];
+ 
   if(false) {jsonedges_clus.push({"latitudes": latarray, "longitudes": lngarray, "color": "#4169E1"});}
   else  { jsonedges_clus.push({"latitudes": latarray, "longitudes": lngarray, "color": colorar[row[0]-1]});}
   });
