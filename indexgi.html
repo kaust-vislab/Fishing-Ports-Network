@@ -47,7 +47,7 @@ html, body, #map {
 <script>
 // Create the Google Map…  
 var map = new google.maps.Map(d3.select("#map").node(), {
-    zoom: 2.7,
+    zoom: 2.9,
     center: new google.maps.LatLng(27.76487, 12.41948),
     mapTypeId: google.maps.MapTypeId.terrain
 });
@@ -71,7 +71,7 @@ var jsonnodes; var jsonedges;var jsonnodes_clus; var jsonedges_clus;
 // var fishnodes_size=[162, 437, 19, 317, 105, 256, 43, 141, 847, 316, 18, 6, 22, 28, 6, 34];
 // var fishnodes_scale=[28, 34, 25, 32, 28, 30, 25, 28, 40, 32, 25, 25, 25, 25, 25,25];
 var fishnodes_size=[854, 16, 68, 19, 223, 104, 87, 17, 14, 6, 47, 44, 13, 32, 16, 31, 32,     7, 36, 44, 15, 10, 18, 5, 19, 1, 1, 0, 16, 0, 4, 4]
-var fishnodes_scale=[40, 16, 68, 19, 223, 104, 87, 17, 14, 6, 47, 44, 13, 32, 16, 31, 32,     7, 36, 44, 15, 10, 18, 5, 19, 1, 1, 0, 16, 0, 4, 4];
+// var fishnodes_scale=[2.15, 2.32, 2.01, 2.25, 2.1, 4, 2.01, 2.1, 2.1, 2.2, 2, 2, 2, 1, 2,2];
 var map;
 var clusters =false;
 // var colorar = [ '#F4A460','#1e90ff','#00ced1','#DAA520','  #FF00FF', '#F08080',' #800000', ' #808000','  #800080','#008080','#ff9800','#FF0000','#D2691E',' #DC143C','#8A2BE2','#5F9EA0'];
@@ -83,8 +83,8 @@ var colorar=['#1f8bb5','#dd1f94','#c33b2e','#e171b3','#820456','#d6af7b',
        '#506f81','#77a98e','#a6f0d5','#ab5295','#431ad7','#95fc2d',
        '#fc93e4','#eaa49b'];
 
-var port_nodes_scale=3;  var fish_hotspots_min_scale=10;   
-var arrow=true;  
+var port_nodes_scale=2;  var fish_hotspots_min_scale=10; 
+var arrow=true;      
 
 function drawdata(){
     jsonnodes=[]; jsonedges=[];
@@ -102,7 +102,7 @@ function drawdata(){
     d3.text("fishing_hotspots.csv", function(text) {
       var data = d3.csv.parseRows(text).map(function(row) {
         //  var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_scale[row[2]-1]*1];
-        var tmp =[row[1],row[0],colorar[row[2]-1],getclustersize(fishnodes_size[row[2]-1]/1),row[2]];
+        var tmp =[row[1],row[0],colorar[row[2]-1],fishnodes_size[row[2]-1]/20,row[2]];
         // var tmp =[row[1],row[0],colorar[row[2]-1],10];
        //console.log((row[2]) + ":"+ getclustersize(fishnodes_size[row[2]-1]));
 
@@ -110,39 +110,26 @@ function drawdata(){
         fishmap[row[2]+'s'] = {"latitude": row[1], "longitude": row[0]};
         if(jsonnodes.length ==939){
           for (var i = 0; i < jsonnodes.length; i++) {     
-                   // if(jsonnodes[i][3] !=port_nodes_scale && jsonnodes[i][3] <fish_hotspots_min_scale)jsonnodes[i][3] =fish_hotspots_min_scale;
-                   // if( jsonnodes[i][3] >25)jsonnodes[i][3] =25;
+                   if(jsonnodes[i][3] !=port_nodes_scale && jsonnodes[i][3] <fish_hotspots_min_scale)jsonnodes[i][3] =fish_hotspots_min_scale;
+                   if( jsonnodes[i][3] >25)jsonnodes[i][3] =25;
 
-                   //  var marker = new google.maps.Marker({
-                   //   position: {lat: +jsonnodes[i][0], lng: +jsonnodes[i][1]},
-                   //   title: (jsonnodes[i][3] ==port_nodes_scale?"Port":  "Fishing Hotspot:"+jsonnodes[i][4]) ,
-                   //   optimized: true,
-                   //   draggable:false,
-                   //   icon: {
-                   //        path: google.maps.SymbolPath.CIRCLE,
-                   //        strokeColor: '#0000ff',
-                   //        strokeOpacity: 0.2,
-                   //        strokeWeight: 1,
-                   //        fillColor: jsonnodes[i][2],
-                   //        fillOpacity: 0.999,
-                   //        optimized: true,
-                   //        draggable:false,
-                   //        scale: jsonnodes[i][3]    }, 
-                   //   map: map  ,                                       
-                   //   zIndex: 10000
-                   // });
-                   if(jsonnodes[i][3] !=port_nodes_scale && jsonnodes[i][3] <20)jsonnodes[i][3] =20;
-                   var marker = new google.maps.Circle({
-                     center: {lat: +jsonnodes[i][0], lng: +jsonnodes[i][1]},
-                     map: map,
-                     radius:jsonnodes[i][3]*10000,
-                     strokeColor: '#0000ff',
-                     strokeOpacity: 0.2,
-                     strokeWeight: 1,
-                     fillColor: jsonnodes[i][2],
-                     fillOpacity: 0.999,
-                     title: 'Uluru (Ayers Rock)',
-                     zIndex: 1000000
+                    var marker = new google.maps.Marker({
+                     position: {lat: +jsonnodes[i][0], lng: +jsonnodes[i][1]},
+                     title: (jsonnodes[i][3] ==port_nodes_scale?"Port":  "Fishing Hotspot:"+jsonnodes[i][4]) ,
+                     optimized: true,
+                     draggable:false,
+                     icon: {
+                          path: google.maps.SymbolPath.CIRCLE,
+                          strokeColor: '#0000ff',
+                          strokeOpacity: 0.2,
+                          strokeWeight: 1,
+                          fillColor: jsonnodes[i][2],
+                          fillOpacity: 0.999,
+                          optimized: true,
+                          draggable:false,
+                          scale: jsonnodes[i][3]    }, 
+                     map: map  ,                                       
+                     zIndex: 10000
                    });
           }
         }
@@ -186,7 +173,7 @@ function drawdata(){
                                  strokeColor:  ((jsonedges[i][5]==1)? "#0000FF": "#FF0000"),  // blue arrow for fish hotspot to port, red arrow for port to fish hotspot
                                  strokeWeight: 1,
                                  scale:1,
-                                 strokeOpacity: arrow?1:0                                
+                                 strokeOpacity: arrow?1:0                                     
                              };
                       // console.log(jsonedges[i][0]);
                       var flightPlanCoordinates2 =  [{lat: jsonedges[i][0], lng: jsonedges[i][1]},{lat: jsonedges[i][2], lng: jsonedges[i][3]}];
@@ -217,7 +204,62 @@ function drawdata(){
     });
 
   }
+// var overlay ;//= new google.maps.OverlayView();
 
+// // Add the container when the overlay is added to the map.
+// overlay.onAdd = function () {
+//     var layer = d3.select(this.getPanes().overlayLayer).append("div")
+//         .attr("class", "stations");
+
+//     // Draw each marker as a separate SVG element.
+//     // We could use a single SVG, but what size would it have?
+//     overlay.draw = function () {
+//         var projection = this.getProjection(),
+//             padding = 10;
+
+//         var marker = layer.selectAll("svg")
+//             .data(d3.entries(jsonnodes))
+//             .each(transform) // update existing markers
+//         .enter().append("svg:svg")
+//             .each(transform)
+//             .attr("class", "marker");
+
+//         // Add a circle.
+//         marker.append("svg:circle")
+//             .attr("r", function(d){
+//               return d.value[3];
+//             })
+//             .attr("cx", padding)
+//             .attr("cy", padding)
+//             .style("zIndex", 10000)
+//             .style("fill", function(d){
+//               // console.log(d);
+//               return d.value[2];
+//             });
+
+//         // Add a label.
+//         // marker.append("svg:text")
+//         //     .attr("x", padding + 7)
+//         //     .attr("y", padding)
+//         //     .attr("dy", ".31em")
+//         //     .text(function (d) {
+//         //     return d.key;
+//         // });
+
+//         function transform(d) {
+//           // console.log(d);
+//           // console.log(d.latitude);
+//             d = new google.maps.LatLng(d.value[0], d.value[1]);
+//             d = projection.fromLatLngToDivPixel(d);
+//             return d3.select(this)
+//                 .style("left", (d.x - padding) + "px")
+//                 .style("top", (d.y - padding) + "px");
+//         }
+//     };
+// };
+
+// Bind our overlay to the map…
+//overlay.setMap(map);
 
 
 </script>
